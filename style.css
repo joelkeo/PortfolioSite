@@ -1,0 +1,29 @@
+/* Styling for the <summary> without any border or padding */
+details summary {
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+}
+
+
+details summary::after {
+  content: '';  
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Change arrow when details are open */
+  details[open] summary::after {
+  content: '';  /* Change to up arrow when open */
+}
+
+/* Remove the default arrow by targeting the marker */
+  details[open] summary::before {
+    content: none;
+}
+
+  body {
+    font-family: "Lucida Console", monospace;
+  }
