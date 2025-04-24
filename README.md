@@ -5,3 +5,5 @@
 
 tldr: used a lot of Details/Summary HTML elements, and defined per-tag inline CSS syling as a lambda based on the depth of the current container. 
 This way I can have exponentially decaying sizes of Deatils/Summary! Some margin and font size logic in there as well.
+
+Not doing much now that couldn't be done using % in CSS, but the concept is theoretically very expandable.
