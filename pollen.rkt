@@ -59,6 +59,7 @@
    (format "margin-left: ~apx" (* 64. (expt expBase depth)))
    (format "margin-top: ~apx" (* 32. (expt expBase depth)))
    (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
+   (format "margin-right: ~apx" (* 32. (expt expBase depth)))
    "display : inline"
    "text-align: right"))
 (define (AnimationStyle depth)
@@ -88,7 +89,8 @@
    (if (zero? depth) "" "border-right: 0")
    (if (zero? depth) "" "border-bottom: 0")
    (format "width: ~a" (if (zero? depth) "60%" "100%"))
-   ; (format "border-left: ~apx solid #c7c0bfaa" (* 8. (expt expBase depth)))
+   ;(format "border-left: ~apx solid rgb(199, 192, 191, ~a)" (* 4. (expt expBase depth)) (* .2 (expt expBase depth)))
+   ;(format "border-right: ~apx solid rgb(199, 192, 191, ~a)" (* 4. (expt expBase depth)) (* .2 (expt expBase depth)))
    ; (format "margin-left: ~apx" margin)
    "list-style: none"
    "margin-top: 0"
@@ -125,7 +127,7 @@
     "width: 50%"))
 (define (ImgWideStyle depth)
   (Style
-    "width: 99%"))
+    "width: 100%"))
 (define (VideoHolderStyle depth)
    (Style
     "position: relative"
@@ -160,8 +162,11 @@
      "margin: 10px" ))
 (define (PageStyle depth)
   (Style
-   "width: 50%"
-   "margin: 0 auto"))
+   "width: 90%"
+   "min-width: "
+   "margin: 0 auto"
+   "max-width: 1200px"
+   "min-width: 320px"))
 (define (LeftFlexStyle depth)
   (Style
    "flex: 0 1 auto"
