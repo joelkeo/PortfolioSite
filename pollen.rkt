@@ -43,74 +43,77 @@
       (foldr (lambda (f r) (sa f ";" r)) "" styles)
       "\""))
 (define noStyle (lambda (depth) "\"\""))
+;; exponentialSize font :: THIS IS FROM PIXELS BUT CONVERTS TO VW
+
+(define (vwSize start depth)
+  (let ([baseVW (/ start 25.6)])
+    (* (expt expBase depth) baseVW)))
+
+(define (fontSize start depth)
+  (format "font-size: ~avw" (vwSize start depth)))
+
 (define (H1Style depth)
   (Style
    (format "font-size: ~apx" (if (= 2 depth) 150 (* 150. (expt expBase depth))))
-   (format "margin-left: ~apx" (* 64. (expt expBase depth)))
-   (format "margin-top: ~apx" (* 32. (expt expBase depth)))
-   (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
+   (format "margin-left: ~avw" (vwSize 64 depth))
+   (format "margin-top: ~avw" (vwSize 32 depth))
+   (format "margin-bottom: ~avw" (vwSize 32. depth))
    "display : inline-block"
    (format "color: rgba(230, 226, 226, ~a)" (expt expBase (/ depth 2)))
 ))
 (define (H3Style depth)
   (Style
    "color: rgba(199, 192, 191, .5)" 
-   (format "font-size: ~apx" (* 50. (expt expBase depth)))
-   (format "margin-left: ~apx" (* 64. (expt expBase depth)))
-   (format "margin-top: ~apx" (* 32. (expt expBase depth)))
-   (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
-   (format "margin-right: ~apx" (* 32. (expt expBase depth)))
+   (fontSize 50 depth)
+   (format "margin-left: ~avw" (vwSize 64 depth))
+   (format "margin-top: ~avw" (vwSize 32 depth))
+   (format "margin-bottom: ~avw" (vwSize 32 depth))
+   (format "margin-right: ~avw" (vwSize 32 depth))
    "display : inline"
    "text-align: right"))
 (define (AnimationStyle depth)
   (Style
-   (format "font-size: ~apx" (* 300. (expt expBase depth)))
-   (format "margin-left: ~apx" (* 64. (expt expBase depth)))
-   (format "margin-top: ~apx" (* 32. (expt expBase depth)))
-   (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
+   (format "font-size: ~avw" (vwSize 300 depth))
+   (format "margin-left: ~avw" (vwSize 64 depth))
+   (format "margin-top: ~avw" (vwSize 32 depth))
+   (format "margin-bottom: ~avw" (vwSize 32 depth))
    "text-align: right"
    "display : inline"))
 (define (PStyle depth)
   (Style
-   (format "font-size: ~apx" (* 76. (expt expBase depth)))
-   ; (format "margin-left: ~apx" (* 128. (expt expBase depth)))
-   (format "margin-top: ~apx" (* 64. (expt expBase depth)))
-   (format "margin-bottom: ~apx" (* 64. (expt expBase depth)))
-   ;(format "border: ~apx solid #c7c0bf" (* 8. (expt expBase depth)))
+   (format "font-size: ~avw" (vwSize 76 depth))
+   (format "margin-top: ~avw" (vwSize 64 depth))
+   (format "margin-bottom: ~avw" (vwSize 64 depth))
    (format "color: rgba(167, 161, 151, ~a)" (expt expBase (/ depth 2)))
    "font-weight: 100"
-   "text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1)"
+   ;"text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1)"
    "line-height: 1.5"
    (format "background-color: rgb(238, 202, 227, ~a)" (* .1 (expt expBase (/ depth 2))))
-   (format "padding: ~apx" (* 64 (expt expBase depth)))))
+   (format "padding: ~avw" (vwSize 64 depth))))
 (define (DetailsStyle depth)
-  (let ([margin (if (zero? depth) 0 (* 128. (expt expBase depth)))])
+  (let ([margin (if (zero? depth) 0 (vwSize 76 depth))])
   (Style
    (if (zero? depth) "" "border-right: 0")
    (if (zero? depth) "" "border-bottom: 0")
    (format "width: ~a" (if (zero? depth) "60%" "100%"))
-   ;(format "border-left: ~apx solid rgb(199, 192, 191, ~a)" (* 4. (expt expBase depth)) (* .2 (expt expBase depth)))
-   ;(format "border-right: ~apx solid rgb(199, 192, 191, ~a)" (* 4. (expt expBase depth)) (* .2 (expt expBase depth)))
-   ; (format "margin-left: ~apx" margin)
    "list-style: none"
    "margin-top: 0"
    "margin-bottom: 0"
    "margin-left: 0")))
 (define (ContentDivStyle depth)
-   (let ([margin (if (zero? depth) 0 (* 128. (expt expBase depth)))])
+   (let ([margin (if (zero? depth) 0 (vwSize 128 depth))])
      (Style
-      (format "width: ~a" (if (zero? depth) "80%" (format "calc(100% - ~apx)" (* 2 margin))))
-      (format "margin-left: ~apx" margin)
-      (format "margin-top: ~apx" (* margin .5)))))
+      (format "width: ~a" (if (zero? depth) "80%" (format "calc(100% - ~avw)" (* 2 margin))))
+      (format "margin-left: ~avw" margin)
+      (format "margin-top: ~vw" (* margin .5)))))
 (define (SummaryStyle depth)
   (Style
-    (format "border-bottom: ~apx solid #c7c0bfaa" (* 8. (expt expBase depth)))
+    (format "border-bottom: ~avw solid #c7c0bfaa" (vwSize 8 depth)) 
    "margin-top: 0"
    "margin-bottom: 0"
    "list-style: none"
    "border-radius: 0"
-    (format "margin-bottom: ~apx" (* 128. (expt expBase depth)))
-  ; (format "margin-left: ~apx" (* 32. (expt expBase depth)))
+    (format "margin-bottom: ~avw" (vwSize 128 depth))
    ))
 (define (ImgStyle depth)
   (Style
@@ -118,7 +121,7 @@
    "text-align: right"
    "vertical-align: middle"
    "display: inline"
-   (format "border: ~apx solid #c7c0bfaa" (* 4. (expt expBase depth)))))
+   (format "border: ~avw solid #c7c0bfaa" (vwSize 4 depth))))
 (define (HalfWidthContainerStyle depth)
   (Style
    ""))
@@ -135,7 +138,7 @@
     "padding-bottom: 46.25%"
     "height: 0"
     "overflow: hidden"
-    (format "margin-bottom: ~apx" (* 64. (expt expBase depth)))))
+    (format "margin-bottom: ~avw" (vwSize 64 depth))))
 (define (VideoStyle depth)
   (Style
    "position: absolute"
@@ -165,7 +168,7 @@
    "width: 90%"
    "min-width: "
    "margin: 0 auto"
-   "max-width: 1200px"
+   "max-width: 1300px"
    "min-width: 320px"))
 (define (LeftFlexStyle depth)
   (Style

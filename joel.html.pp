@@ -89,8 +89,7 @@ The Repo has a great explanation of the logic behind it, as well as all of the c
 
 ◊; NightSnake >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ◊(define NightSnakeSlides (Video "https://docs.google.com/presentation/d/e/2PACX-1vRo0LtcL4JlhMUE3sMBzbuZxFla291ZIeSNklyfciFg2uXRD7twy50gcmlQQNXNMZhVLaWdMxLaazwE/pubembed?start=false&loop=false&delayms=60000"))
-◊(define NightSnakeContent (Group (P "For my capstone course at Northeastern, I took Compilers, in which we built a course-led programming language throughout the semester called \"Snake\"
-. We wrote the compiler for Snake in OCaml & C, and targetted ASM.
+◊(define NightSnakeContent (Group (P "For my capstone course at Northeastern, I took Compilers, in which we built a course-led programming language throughout the semester called \"Snake\". We wrote the compiler for Snake in OCaml & C, and targetted ASM.
 For our final project, we wanted to allow the language (which up to that point had ids, math operations,
 lambdas, recursion, and many other features) to deal with BigNums. We came up with what is potentially a novel
 approach to computing bigNums, optimizing subtraction and addition by including in the bigNum memory represtation
