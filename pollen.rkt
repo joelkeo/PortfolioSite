@@ -47,17 +47,24 @@
 
 (define (vwSize start depth)
   (let ([baseVW (/ start 25.6)])
-    (* (expt expBase depth) baseVW)))
+    (/ (* (expt expBase depth) start) 25.6)))
+
+(define (standardSize start depth)
+  (let ([size (* (expt expBase depth) start)])
+    (pxToStandard size)))
+
+(define (pxToStandard px)
+  (format "~arem" (/ px 18.)))
 
 (define (fontSize start depth)
-  (format "font-size: ~avw" (vwSize start depth)))
+  (format "font-size: ~a" (standardSize start depth)))
 
 (define (H1Style depth)
   (Style
-   (format "font-size: ~apx" (if (= 2 depth) 150 (* 150. (expt expBase depth))))
-   (format "margin-left: ~avw" (vwSize 64 depth))
-   (format "margin-top: ~avw" (vwSize 32 depth))
-   (format "margin-bottom: ~avw" (vwSize 32. depth))
+   (format "font-size: ~a" (pxToStandard (if (= 2 depth) 150 (* 150. (expt expBase depth)))))
+   (format "margin-left: ~a" (standardSize 64 depth))
+   (format "margin-top: ~a" (standardSize 32 depth))
+   (format "margin-bottom: ~a" (standardSize 32. depth))
    "display : inline-block"
    (format "color: rgba(230, 226, 226, ~a)" (expt expBase (/ depth 2)))
 ))
@@ -65,33 +72,33 @@
   (Style
    "color: rgba(199, 192, 191, .5)" 
    (fontSize 50 depth)
-   (format "margin-left: ~avw" (vwSize 64 depth))
-   (format "margin-top: ~avw" (vwSize 32 depth))
-   (format "margin-bottom: ~avw" (vwSize 32 depth))
-   (format "margin-right: ~avw" (vwSize 32 depth))
+   (format "margin-left: ~a" (standardSize 64 depth))
+   (format "margin-top: ~a" (standardSize 32 depth))
+   (format "margin-bottom: ~a" (standardSize 32 depth))
+   (format "margin-right: ~a" (standardSize 32 depth))
    "display : inline"
    "text-align: right"))
 (define (AnimationStyle depth)
   (Style
-   (format "font-size: ~avw" (vwSize 300 depth))
-   (format "margin-left: ~avw" (vwSize 64 depth))
-   (format "margin-top: ~avw" (vwSize 32 depth))
-   (format "margin-bottom: ~avw" (vwSize 32 depth))
+   (format "font-size: ~a" (standardSize 300 depth))
+   (format "margin-left: ~a" (standardSize 64 depth))
+   (format "margin-top: ~a" (standardSize 32 depth))
+   (format "margin-bottom: ~a" (standardSize 32 depth))
    "text-align: right"
    "display : inline"))
 (define (PStyle depth)
   (Style
-   (format "font-size: ~avw" (vwSize 76 depth))
-   (format "margin-top: ~avw" (vwSize 64 depth))
-   (format "margin-bottom: ~avw" (vwSize 64 depth))
+   (format "font-size: ~a" (standardSize 76 depth))
+   (format "margin-top: ~a" (standardSize 64 depth))
+   (format "margin-bottom: ~a" (standardSize 64 depth))
    (format "color: rgba(167, 161, 151, ~a)" (expt expBase (/ depth 2)))
    "font-weight: 100"
    ;"text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1)"
    "line-height: 1.5"
    (format "background-color: rgb(238, 202, 227, ~a)" (* .1 (expt expBase (/ depth 2))))
-   (format "padding: ~avw" (vwSize 64 depth))))
+   (format "padding: ~a" (standardSize 64 depth))))
 (define (DetailsStyle depth)
-  (let ([margin (if (zero? depth) 0 (vwSize 76 depth))])
+  (let ([margin (if (zero? depth) 0 (standardSize 76 depth))])
   (Style
    (if (zero? depth) "" "border-right: 0")
    (if (zero? depth) "" "border-bottom: 0")
@@ -101,19 +108,19 @@
    "margin-bottom: 0"
    "margin-left: 0")))
 (define (ContentDivStyle depth)
-   (let ([margin (if (zero? depth) 0 (vwSize 128 depth))])
+   (let ([margin (if (zero? depth) 0 (* 128 (expt expBase depth)))])
      (Style
-      (format "width: ~a" (if (zero? depth) "80%" (format "calc(100% - ~avw)" (* 2 margin))))
-      (format "margin-left: ~avw" margin)
-      (format "margin-top: ~vw" (* margin .5)))))
+      (format "width: ~a" (if (zero? depth) "80%" (format "calc(100% - ~a)" (pxToStandard (* 2 margin)))))
+      (format "margin-left: ~a" (pxToStandard margin))
+      (format "margin-top: ~a" (pxToStandard (* .5 margin))))))
 (define (SummaryStyle depth)
   (Style
-    (format "border-bottom: ~avw solid #c7c0bfaa" (vwSize 8 depth)) 
+    (format "border-bottom: ~a solid #c7c0bfaa" (standardSize 8 depth)) 
    "margin-top: 0"
    "margin-bottom: 0"
    "list-style: none"
    "border-radius: 0"
-    (format "margin-bottom: ~avw" (vwSize 128 depth))
+    (format "margin-bottom: ~a" (standardSize 128 depth))
    ))
 (define (ImgStyle depth)
   (Style
@@ -121,7 +128,7 @@
    "text-align: right"
    "vertical-align: middle"
    "display: inline"
-   (format "border: ~avw solid #c7c0bfaa" (vwSize 4 depth))))
+   (format "border: ~a solid #c7c0bfaa" (standardSize 4 depth))))
 (define (HalfWidthContainerStyle depth)
   (Style
    ""))
@@ -138,7 +145,7 @@
     "padding-bottom: 46.25%"
     "height: 0"
     "overflow: hidden"
-    (format "margin-bottom: ~avw" (vwSize 64 depth))))
+    (format "margin-bottom: ~a" (standardSize 64 depth))))
 (define (VideoStyle depth)
   (Style
    "position: absolute"

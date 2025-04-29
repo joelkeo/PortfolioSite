@@ -41,7 +41,7 @@ I plan to release the plugin as a paid product when development has finished. Th
                     (H1 "Distribution")))
 ◊(define GFGUI (DS (Group
 (ImgWide "wfGif.gif")
- (P "I designed the GUI to be unique and interactive, while still being intuitive. Grain generation feedback is
+ (P "I designed the GUI from scratch to be unique and interactive, while still being intuitive. Grain generation feedback is
 shown over the sample window (grain position, amplitude, and compression) and behind the envelopes
 (waveform of the most recently generated game. Modulation amounts are also displayed, and LFOs and drawable."))
 
