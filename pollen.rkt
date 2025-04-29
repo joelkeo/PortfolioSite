@@ -37,7 +37,7 @@
     (lambda (depth)
       (format "<~a style = ~a ~a/>" tag (dcss depth) atts))))
 ; TAGS STYLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-(define expBase 5/8)
+(define expBase .8)
 (define (Style . styles)
   (sa "\""
       (foldr (lambda (f r) (sa f ";" r)) "" styles)
@@ -45,11 +45,13 @@
 (define noStyle (lambda (depth) "\"\""))
 (define (H1Style depth)
   (Style
-   (format "font-size: ~apx" (* 150. (expt expBase depth)))
+   (format "font-size: ~apx" (if (= 2 depth) 150 (* 150. (expt expBase depth))))
    (format "margin-left: ~apx" (* 64. (expt expBase depth)))
    (format "margin-top: ~apx" (* 32. (expt expBase depth)))
    (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
-   "display : inline-block"))
+   "display : inline-block"
+   (format "color: rgba(230, 226, 226, ~a)" (expt expBase (/ depth 2)))
+))
 (define (H3Style depth)
   (Style
    "color: rgba(199, 192, 191, .5)" 
@@ -57,7 +59,8 @@
    (format "margin-left: ~apx" (* 64. (expt expBase depth)))
    (format "margin-top: ~apx" (* 32. (expt expBase depth)))
    (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))
-   "display : inline"))
+   "display : inline"
+   "text-align: right"))
 (define (AnimationStyle depth)
   (Style
    (format "font-size: ~apx" (* 300. (expt expBase depth)))
@@ -68,33 +71,52 @@
    "display : inline"))
 (define (PStyle depth)
   (Style
-   (format "font-size: ~apx" (* 100. (expt expBase depth)))
+   (format "font-size: ~apx" (* 76. (expt expBase depth)))
    ; (format "margin-left: ~apx" (* 128. (expt expBase depth)))
-   (format "margin-top: ~apx" (* 8. (expt expBase depth)))
-   (format "margin-bottom: ~apx" (* 32. (expt expBase depth)))))
+   (format "margin-top: ~apx" (* 64. (expt expBase depth)))
+   (format "margin-bottom: ~apx" (* 64. (expt expBase depth)))
+   ;(format "border: ~apx solid #c7c0bf" (* 8. (expt expBase depth)))
+   (format "color: rgba(167, 161, 151, ~a)" (expt expBase (/ depth 2)))
+   "font-weight: 100"
+   "text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.1)"
+   "line-height: 1.5"
+   (format "background-color: rgb(238, 202, 227, ~a)" (* .1 (expt expBase (/ depth 2))))
+   (format "padding: ~apx" (* 64 (expt expBase depth)))))
 (define (DetailsStyle depth)
   (let ([margin (if (zero? depth) 0 (* 128. (expt expBase depth)))])
   (Style
-   (format "border: ~apx solid #c7c0bf" (* 8. (expt expBase depth)))
    (if (zero? depth) "" "border-right: 0")
    (if (zero? depth) "" "border-bottom: 0")
-   (format "width: ~a" (if (zero? depth) "70%" "100%"))
+   (format "width: ~a" (if (zero? depth) "60%" "100%"))
+   ; (format "border-left: ~apx solid #c7c0bfaa" (* 8. (expt expBase depth)))
    ; (format "margin-left: ~apx" margin)
-   "list-style: none")))
+   "list-style: none"
+   "margin-top: 0"
+   "margin-bottom: 0"
+   "margin-left: 0")))
 (define (ContentDivStyle depth)
    (let ([margin (if (zero? depth) 0 (* 128. (expt expBase depth)))])
      (Style
-      (format "width: ~a" (if (zero? depth) "80%" (format "width: calc(100% - ~apx)" margin)))
-      (format "margin-left: ~apx" margin))))
+      (format "width: ~a" (if (zero? depth) "80%" (format "calc(100% - ~apx)" (* 2 margin))))
+      (format "margin-left: ~apx" margin)
+      (format "margin-top: ~apx" (* margin .5)))))
 (define (SummaryStyle depth)
   (Style
-   (format "list-style: none")))
+    (format "border-bottom: ~apx solid #c7c0bfaa" (* 8. (expt expBase depth)))
+   "margin-top: 0"
+   "margin-bottom: 0"
+   "list-style: none"
+   "border-radius: 0"
+    (format "margin-bottom: ~apx" (* 128. (expt expBase depth)))
+  ; (format "margin-left: ~apx" (* 32. (expt expBase depth)))
+   ))
 (define (ImgStyle depth)
   (Style
-   (format "width : 65%")
+   (format "width : 45%")
    "text-align: right"
    "vertical-align: middle"
-   "display: inline"))
+   "display: inline"
+   (format "border: ~apx solid #c7c0bfaa" (* 4. (expt expBase depth)))))
 (define (HalfWidthContainerStyle depth)
   (Style
    ""))
@@ -108,20 +130,22 @@
    (Style
     "position: relative"
     "width: 100%"
-    "padding-bottom: 23.125%"
+    "padding-bottom: 46.25%"
     "height: 0"
-    "overflow: hidden"))
+    "overflow: hidden"
+    (format "margin-bottom: ~apx" (* 64. (expt expBase depth)))))
 (define (VideoStyle depth)
   (Style
    "position: absolute"
-   "width: 50%"
+   "width: 100%"
    "height: 100%"
    "overflow: hidden"))
 
 
 (define (FlexStyle depth)
   (Style
-     "display: flex"))
+     "display: flex"
+     "align-items: center"))
 (define (ColumnStyle depth)
   (Style
      "display: flex"
@@ -134,6 +158,20 @@
      "flex-direction: row"
      "justify-content: center"
      "margin: 10px" ))
+(define (PageStyle depth)
+  (Style
+   "width: 50%"
+   "margin: 0 auto"))
+(define (LeftFlexStyle depth)
+  (Style
+   "flex: 0 1 auto"
+))
+(define (RightFlexStyle depth)
+  (Style
+   "flex: 1" 
+   "min-width: 100px"
+   "text-align: right"
+))
 ; TAGS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 (define H1 (tfB "h1" H1Style))
 (define H3 (tfB "h3" H3Style))
@@ -168,6 +206,8 @@ referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen")
 (define Column (DivWStyle ColumnStyle))
 (define Row (DivWStyle RowStyle))
 (define Flex (DivWStyle FlexStyle))
+(define LeftFlex (DivWStyle LeftFlexStyle))
+(define RightFlex (DivWStyle RightFlexStyle))
 ; list of DHTML -> DHTML
 (define (Group . contentList)
   (lambda (depth)
@@ -177,15 +217,20 @@ referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen")
 (define (DS content summary)
   (Details (Group (Summary summary) (ContentDiv content))))
 (define (Page dhtmlContent)
-  (dhtmlContent 0))
+  (((DivWStyle PageStyle) dhtmlContent) 2))
 ;; Title Subtitle Macro
 (define (TitleSubtitle title subtitle)
-  (Group (H1 title) (H3 subtitle)))
+  (LeftAndRight (H1 title) (H3 subtitle)))
 ;; Rows and Column
 (define (Rows . rows)
   (lambda (depth)
     (foldr (lambda (f r) (sa ((Row f) depth) r)) "" rows)))
-
 (define (Columns . columns)
   (lambda (depth)
     (foldr (lambda (f r) (sa ((Column f) depth) r)) "" columns)))
+;; where left takes up max space, right takes upmin
+(define (LeftAndRight left right)
+  (Flex
+   (Group
+    (LeftFlex left)
+    (RightFlex right))))
