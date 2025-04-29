@@ -24,6 +24,8 @@ details summary::after {
     content: none;
 }
 
-  body {
-    font-family: "Lucida Console", monospace;
-  }
+body {
+  font-family: "Lucida Console", monospace;
+  background-color: #1e1e1e;
+   color: #c7c0bf; 
+}
