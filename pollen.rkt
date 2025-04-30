@@ -66,8 +66,8 @@
    (format "margin-top: ~a" (standardSize 32 depth))
    (format "margin-bottom: ~a" (standardSize 32. depth))
    "display : inline-block"
-   (format "color: rgba(230, 226, 226, ~a)" (expt expBase (/ depth 2)))
-))
+   (format "color: rgba(230, 226, 226, ~a)" (* 1.3 (expt expBase depth))
+)))
 (define (H3Style depth)
   (Style
    "color: rgba(199, 192, 191, .5)" 
@@ -115,7 +115,7 @@
       (format "margin-top: ~a" (pxToStandard (* .5 margin))))))
 (define (SummaryStyle depth)
   (Style
-    (format "border-bottom: ~a solid #c7c0bfaa" (standardSize 8 depth)) 
+    (format "border-bottom: ~a solid rgba(199, 192, 191, ~a)" (standardSize 8 depth) (* .87 (expt expBase depth))) 
    "margin-top: 0"
    "margin-bottom: 0"
    "list-style: none"
