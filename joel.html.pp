@@ -27,7 +27,7 @@ lazy modulator computation, and other techniques to ensure glitch-free audio and
 ◊(define GFMOD (DS
 (Group
 (ImgWide "mod.gif")(P "Modern synths often offer flexible, drag and drop modulations, and grainferno is no exception. Various modulators have been built-in to grainferno:
-Enevelopes, Drawable LFOs, Randomness & More, can dynamically be linked to any audio parameter.
+Enevelopes, Drawable LFOs, Randomness & More, have been implemented from scratch, & can dynamically be linked to any audio parameter.
 Such flexibility means that DSP computations cannot work with static (per buffer) parameter values:
 modulations must first be applied, from various sources. Additionally, the state of these modulators may
 differ per synth voice. JUCE Parameters are held in a Modulation Matrix class which can load up voice-specific state,
