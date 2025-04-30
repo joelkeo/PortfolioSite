@@ -71,7 +71,7 @@
 (define (H3Style depth)
   (Style
    "color: rgba(199, 192, 191, .5)" 
-   (fontSize 50 depth)
+   (fontSize 60 depth)
    (format "margin-left: ~a" (standardSize 64 depth))
    (format "margin-top: ~a" (standardSize 32 depth))
    (format "margin-bottom: ~a" (standardSize 32 depth))
