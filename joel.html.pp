@@ -118,7 +118,7 @@ It was a great functional programming refresher! You can check out the source co
 
 ◊; PAGE   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ◊(define Subtitle (P "I build audio tools and compilers, specializing in C++, JUCE, and functional programming.
-Here are some of my favorite projects. Click on a project to expand it!"))
+Here are some of my favorite projects. Click on a project to expand!"))
 ◊(define Projects (Group Subtitle Grainferno Inertia NightSnake ThisSite))
 ◊(define Joel (DSOPEN Projects
 (Flex
