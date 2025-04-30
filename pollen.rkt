@@ -152,8 +152,6 @@
    "width: 100%"
    "height: 100%"
    "overflow: hidden"))
-
-
 (define (FlexStyle depth)
   (Style
      "display: flex"
@@ -213,6 +211,7 @@ referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen")
     ((tfBV "img" ImgStyle) (format "src = \"~a\"" src))))
 (define ImgWide (ImgWStyle ImgWideStyle))
 (define Details (tfR "details" DetailsStyle add1))
+(define DetailsA (tfRA "details" DetailsStyle add1))
 (define Summary (tfR "summary" SummaryStyle sub1))
 (define (DivWStyle style)
   (tfR "div" style (lambda (x)x)))
@@ -231,6 +230,12 @@ referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen")
 ;; Details Summary Macro
 (define (DS content summary)
   (Details (Group (Summary summary) (ContentDiv content))))
+;; w/ ID
+(define (DSWID content summary id)
+  (DetailsA (Group (Summary summary) (ContentDiv content)) (format "id = \"~a\"" id)))
+;; open details
+(define (DSOPEN content summary)
+  (DetailsA (Group (Summary summary) (ContentDiv content)) "open"))
 (define (Page dhtmlContent)
   (((DivWStyle PageStyle) dhtmlContent) 2))
 ;; Title Subtitle Macro

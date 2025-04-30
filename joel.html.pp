@@ -14,14 +14,20 @@
 (Group (ImgWide "LLCode.png")
 (P
 "A realtime .vst synthesizer must process input MIDI and return an audio buffer in < 1ms.
-This meant that I had to be extremely careful about even the tiniest of details. Stack frame creation,
+This meant that, when designing grainferno, I had to be extremely careful about even the tiniest of details. Stack frame creation,
  conditionals, memory allocation, and complex operations needed to be avoided or optimized. I used
 profiling tools to eliminate bottlenecks, and used precomputed LUT buffers,
-lazy modulator computation, and other techniques to ensure glitch-free audio and low CPU usage."))
+lazy modulator computation, and other techniques to ensure glitch-free audio and low CPU usage.")
+
+(P
+"Much of the DSP is based on sinc-interpolation: this is what allows grains to be dynamically repitched, and also what allows them to \"start\" in-between
+ sample positions. However, there were many other more minor DSP consideration, such as Biquad Filtering, Resampling (for audio files which didn't match
+ the host sample rate), and RMS calculation for visualization"))
                     (H1 "DSP & Realtime Capabilities")))
 ◊(define GFMOD (DS
 (Group
-(ImgWide "mod.gif")(P "Modern synths often offer flexible, drag and drop modulations, and grainferno is no exception.
+(ImgWide "mod.gif")(P "Modern synths often offer flexible, drag and drop modulations, and grainferno is no exception. Various modulators built-in to grainferno:
+Enevelopes, Drawable LFOs, Randomness & More, can dynamically be linked to any audio parameter.
 Such flexibility means that DSP computations cannot work with static (per buffer) parameter values:
 modulations must first be applied, from various sources. Additionally, the state of these modulators may
 differ per synth voice. JUCE Parameters are held in a Modulation Matrix class which can load up voice-specific state,
@@ -42,12 +48,11 @@ I plan to release the plugin as a paid product when development has finished. Th
 ◊(define GFGUI (DS (Group
 (ImgWide "wfGif.gif")
  (P "I designed the GUI from scratch to be unique and interactive, while still being intuitive. Grain generation feedback is
-shown over the sample window (grain position, amplitude, and compression) and behind the envelopes
-(waveform of the most recently generated game. Modulation amounts are also displayed, and LFOs and drawable."))
-
+shown over the sample window (grain position, amplitude, and compression) shown above, and per grain RMS content is shown behind the envelopes.
+ Modulation amounts (live and range) are also displayed, and LFOs are dynamically drawable."))
                    (H1 "GUI")))
 ◊(define GFNOVELTY (DS (Group (ImgWide "comp.gif")
-(P  "I wanted grainferno to provide high quality sound and an intuivitve interface, but also some brand new
+(P "I wanted grainferno to provide high quality sound and an intuivitve interface, but also some brand new
 features for users to play with. Initially this was \"tonal granulation\": the ability to generate grains at
 audio rate, keytracked to the note being played. This required grain positions to be able to exist between sample positions
 (solved with sinc interpolation/fractional delays). However, months into development, Serum 2 brought this exact
@@ -115,7 +120,7 @@ It was a great functional programming refresher! You can check out the source co
 ◊(define Subtitle (P "I build audio tools and compilers, specializing in C++, JUCE, and functional programming.
 Here are some of my favorite projects. Click on a project to expand it!"))
 ◊(define Projects (Group Subtitle Grainferno Inertia NightSnake ThisSite))
-◊(define Joel (DS Projects
+◊(define Joel (DSOPEN Projects
 (Flex
   (Columns
     ;(Rows (Animation "blinky"))
